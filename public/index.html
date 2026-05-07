@@ -60,8 +60,23 @@
   <div class="container">
     <h1>Vegavan AI Chatbot Live Demo</h1>
     <p>This is your live external HTML testing page. Click the chat launcher bubble in the bottom right corner, fill in the <strong>Name & Phone Pre-chat Form</strong>, and watch the lead appear in real-time inside your SaaS Dashboard panel!</p>
-    <a href="http://localhost:3000/dashboard" class="btn">Back to SaaS Dashboard</a>
+    <a href="/dashboard" class="btn" id="dashboard-btn">Back to SaaS Dashboard</a>
   </div>
+
+  <script>
+    // Dynamically update the "Back to SaaS Dashboard" button based on the referrer
+    if (document.referrer) {
+      try {
+        const url = new URL(document.referrer);
+        const dashboardBtn = document.getElementById('dashboard-btn');
+        if (dashboardBtn) {
+          dashboardBtn.href = `${url.origin}/dashboard`;
+        }
+      } catch (err) {
+        console.warn('Unable to resolve referrer origin:', err);
+      }
+    }
+  </script>
 
   <!-- Embedded Chatbot Widget -->
   <script src="/chatbot.js" data-user-id="69fad2cb361347e3ca9d17fc"></script>
