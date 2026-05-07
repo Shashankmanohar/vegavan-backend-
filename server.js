@@ -22,6 +22,11 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
+// Root Route
+app.get('/', (req, res) => {
+  res.send('Hello from Backend!');
+});
+
 // Serve Static Files from public (For the chatbot.js embed script)
 app.use(express.static(path.join(__dirname, 'public')));
 
