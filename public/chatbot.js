@@ -11,8 +11,17 @@
     return;
   }
 
-  // 2. Define configurations & api hosts (Adjust to production URL when deploying)
-  const API_HOST = 'http://localhost:5000';
+  // 2. Define configurations & api hosts dynamically based on the script's src URL
+  const scriptSrc = scriptTag ? (scriptTag.getAttribute('src') || '') : '';
+  let API_HOST = 'http://localhost:5000';
+  if (scriptSrc && (scriptSrc.startsWith('http://') || scriptSrc.startsWith('https://'))) {
+    try {
+      const url = new URL(scriptSrc);
+      API_HOST = url.origin;
+    } catch (err) {
+      console.warn('AI Chatbot: Unable to parse script origin, utilizing fallback.', err);
+    }
+  }
   let sessionId = localStorage.getItem('ai_chat_session_id') || '';
   let config = {
     businessName: 'AI Support',
